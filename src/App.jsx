@@ -10,7 +10,7 @@ const TURNS = {
 
 
 
-
+//Para dibijar los cuadros del juego 
 const Square = ({children, updateBoard, index, isSelected})=>{
 
   const className = `square ${isSelected ? 'is-selected' : ''}`
@@ -24,6 +24,7 @@ const Square = ({children, updateBoard, index, isSelected})=>{
   )
 }
 
+//Arreglo de casos para ganar en el juego 
 const WINNER_COMBOS = [
   [0,1,2],
   [3,4,5],
@@ -35,13 +36,14 @@ const WINNER_COMBOS = [
   [2,4,6]
 ]
 
+
 function App() {
 
   const [board, setBoard] = useState(Array(9).fill(null))
   const [turn, setTurn] = useState(TURNS.X)
   const [winner, setWinner] = useState(null)
 
-  const chackWinner = (boardToCheck)=>{
+  const checkWinner = (boardToCheck)=>{
     for(const combo of WINNER_COMBOS){
       const [a,b,c] = combo
       if (
@@ -55,6 +57,16 @@ function App() {
     return null
   }
 
+    const resetGame = ()=>{
+      setBoard(Array(9).fill(null))
+      setTurn(TURNS.X)
+      setWinner(null)
+    }
+
+    const checkEndGame = (newBoard)=>{
+      return newBoard.every((square)=> square != null)
+    }
+
   const updateBoard = (index)=>{
     
     //Evitar sobreescribir 
@@ -64,20 +76,24 @@ function App() {
     const newBoard = [...board]
     newBoard[index] = turn
     setBoard(newBoard)
-    const newWinner = chackWinner(newBoard)
+    const newWinner = checkWinner(newBoard)
 
     if (newWinner){
       setWinner(newWinner)
-      alert(newWinner)
+    } else if (checkEndGame(newBoard)){
+      setWinner(false)
     }
 
     const newTurn = turn == TURNS.O ? TURNS.X : TURNS.O
     setTurn(newTurn)
+
+
   }
 
   return (  
     <main className='board'>
       <h1>Tic-Tac-Toe</h1>
+       <button onClick={resetGame}>Empezar de nuevo</button>
       <section className='game'>
         {
           board.map((_, index)=>{
@@ -95,6 +111,29 @@ function App() {
         <Square isSelected = {turn == TURNS.X}>{TURNS.X}</Square>
         <Square isSelected = {turn == TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      
+        {
+          winner != null && (
+            <section className='winner'>
+              <div className='text'>
+                <h1>
+                  {
+                    winner === false ? 'Empate' : 'Ganó '
+                  }
+                </h1>
+
+                <header className='win'>
+                  {winner && <Square>{winner}</Square>}
+                </header>
+
+                <footer>
+                  <button onClick={resetGame}>Empezar de nuevo</button>
+                </footer>
+              </div>
+            </section>
+          )
+        }
     </main>
   )
 }
