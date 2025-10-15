@@ -21,6 +21,12 @@ function App() {
       return turnFromStorage ?? TURNS.X
   })
   const [winner, setWinner] = useState(null)
+  const [theme, setTheme] = useState('dark')
+
+  const toggleTheme = ()=>{
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light')
+  }
+  
 
 
   const resetGame = () => {
@@ -59,9 +65,15 @@ function App() {
     window.localStorage.setItem('turn', newTurn)
 
   }
+  
 
   return (
-    <main className='board'>
+<body className= {`app ${theme}`}>
+      <main className='board'>
+      <label className="switch">
+  <input type="checkbox" onChange={toggleTheme} checked={theme === 'dark'} />
+  <span className="slider"></span>
+</label>
       <h1>Tic-Tac-Toe</h1>
       <button onClick={resetGame}>Empezar de nuevo</button>
       <Board board={board} updateBoard={updateBoard}></Board>
@@ -73,6 +85,7 @@ function App() {
       <WinnerModal resetGame={resetGame} winner={winner}></WinnerModal>
 
     </main>
+</body>
   )
 }
 
