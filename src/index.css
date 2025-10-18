@@ -128,8 +128,8 @@ body {
   place-items: center;
   cursor: pointer;
   font-size: 48px;
-  color: black; /* Relleno del texto */
-  -webkit-text-stroke: 2px white;
+  color: rgb(224, 19, 19); /* Relleno del texto */
+  -webkit-text-stroke: 2px rgb(220, 19, 19);
   font-weight: bold;
    transition: transform 0.2s ease;
 }
@@ -198,4 +198,60 @@ input:checked + .slider {
 
 input:checked + .slider:before {
   transform: translateX(36px);
+}
+
+.scoreboard {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 8px;
+    /* Usa variables de tu tema */
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ESTA ES LA REGLA CRÍTICA PARA PONER EL BOTÓN AL LADO */
+.score-control {
+    display: flex; /* Convierte el contenedor en Flex */
+    /* Mueve el contenido a los extremos: Contadores a la izquierda, Botón a la derecha */
+    justify-content: space-between; 
+    align-items: center; /* Centra verticalmente ambos elementos */
+    padding: 0 10px; /* Un poco de padding horizontal interno */
+}
+
+/* Contenedor del Score Display (para que los párrafos no interfieran con la alineación) */
+.score-display {
+    display: flex; 
+    flex-direction: column; /* Apila los dos párrafos de X y O */
+    gap: 5px;
+}
+
+.score-display p {
+    margin: 0;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* Estilo para el botón de Reiniciar */
+.reset-score-btn {
+    padding: 10px 15px;
+    border: 2px solid #ff4757;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    background-color: #ff4757; 
+    color: white;
+    transition: background-color 0.2s, transform 0.1s;
+    flex-shrink: 0; 
+}
+
+.reset-score-btn:hover {
+    background-color: #e63748;
+    transform: translateY(-1px);
+}
+.app.light P{
+  color: black;
 }
